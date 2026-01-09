@@ -1,0 +1,89 @@
+{
+  "version": 9,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "VCPKG CL",
+      "description": "Dynamic-pthread triplet using CL.",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "c:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
+        "VCPKG_HOST_TRIPLET": "x64-windows",
+        "VCPKG_TARGET_TRIPLET": "x64-windows",
+        "VCPKG_MANIFEST_INSTALL": "OFF",
+        "VCPKG_APPLOCAL_DEPS": "OFF",
+        "VCPKG_INSTALLED_DIR": "${sourceDir}/vcpkg_installed",
+        "GIT_EXECUTABLE": "C:\\vcpkg\\downloads\\tools\\git-2.7.4-windows\\bin\\git.exe"
+      },
+      "environment": {
+        "VCPKG_BINARY_SOURCES": "clear;files,C:\\Users\\JBialas\\cache,readwrite"
+      }
+    },
+    {
+      "name": "debug",
+      "inherits": "default",
+      "displayName": "VCPKG CL - Debug",
+      "description": "Dynamic-pthread triplet using (Debug).",
+      "binaryDir": "${sourceDir}/build-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release",
+      "inherits": "default",
+      "displayName": "VCPKG CL - Release",
+      "description": "Dynamic-pthread triplet using (Release).",
+      "binaryDir": "${sourceDir}/build-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "displayName": "Debug build",
+      "configurePreset": "debug"
+    },
+    {
+      "name": "release",
+      "displayName": "Release build",
+      "configurePreset": "release"
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "debug",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "debug"
+        },
+        {
+          "type": "build",
+          "name": "debug"
+        }
+      ]
+    },
+    {
+      "name": "release",
+      "steps": [
+        {
+          "type": "configure",
+          "name": "release"
+        },
+        {
+          "type": "build",
+          "name": "release"
+        }
+      ]
+    }
+  ]
+}

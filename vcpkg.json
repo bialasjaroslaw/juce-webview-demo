@@ -1,0 +1,6 @@
+{
+  "builtin-baseline": "6216d31bc1d529bbb40c2a1c4535ab86d081abcf",
+  "dependencies": [
+    "webview2"
+  ]
+}

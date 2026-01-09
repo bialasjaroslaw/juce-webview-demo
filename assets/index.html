@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <button id="myBtn">Send to C++ backend</button>
+
+    <script type="module">
+        import * as Juce from "./js/juce/index.js";
+
+        console.log("JUCE frontend library successfully imported");
+        const nativeFunction = Juce.getNativeFunction("sayHelloToJuce");
+
+        function showNotificationUI(message) {
+            const toast = document.createElement("div");
+            toast.className = "toast";
+            toast.innerText = `Notification: ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 30000);
+            alert("FOO: " + message);
+        }
+
+        window.__JUCE__.backend.addEventListener("exampleEvent", (objectFromCppBackend) => {
+            console.log("Received an event!");
+            console.log(objectFromCppBackend);
+            showNotificationUI(objectFromCppBackend);
+        });
+
+
+
+    document.getElementById("myBtn").addEventListener("click", async () => {
+        console.log("Trying to call C++ native function...");
+        try {
+            if (nativeFunction) {
+                console.log("nativeCall");
+                const response = await nativeFunction("Test message");
+                console.log("Response from C++:", response);
+            } else {
+                console.error("Function sayHelloToJuce have not been found!");
+                console.log("Available objects:", Object.keys(window));
+            }
+        } catch (err) {
+            console.error("Error communicating with C++:", err);
+        }
+    });
+</script>
+</body>
+</html>
