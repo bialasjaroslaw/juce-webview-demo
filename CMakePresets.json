@@ -9,7 +9,7 @@
     {
       "name": "default",
       "generator": "Ninja",
-      "binaryDir": "build",
+      "binaryDir": "build-default",
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
         "CMAKE_BUILD_TYPE": "Debug"
@@ -17,19 +17,13 @@
     },
     {
       "name": "vcpkg",
-      "displayName": "VCPKG CL",
-      "description": "Dynamic-pthread triplet using CL.",
-      "binaryDir": "${sourceDir}/build-debug",
-      "generator": "Ninja",
+      "inherits" : "default",
+      "binaryDir": "${sourceDir}/build-vcpkg",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_TOOLCHAIN_FILE": "c:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
-        "VCPKG_HOST_TRIPLET": "x64-windows",
-        "VCPKG_TARGET_TRIPLET": "x64-windows",
         "VCPKG_MANIFEST_INSTALL": "OFF",
         "VCPKG_APPLOCAL_DEPS": "OFF",
-        "VCPKG_INSTALLED_DIR": "${sourceDir}/vcpkg_installed",
-        "GIT_EXECUTABLE": "C:\\vcpkg\\downloads\\tools\\git-2.7.4-windows\\bin\\git.exe"
+        "VCPKG_INSTALLED_DIR": "${sourceDir}/vcpkg_installed"
       },
       "environment": {
         "VCPKG_BINARY_SOURCES": "clear;files,C:\\Users\\JBialas\\cache,readwrite"
