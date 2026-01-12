@@ -22,7 +22,7 @@ message(STATUS "vcpkg host triplet: ${VCPKG_HOST_TRIPLET}")
 message(STATUS "vcpkg manifest mode: ${VCPKG_MANIFEST_MODE}")
 message(STATUS "NEEDS_WEBVIEW2_VALUE: ${NEEDS_WEBVIEW2_VALUE}")
 
-set(WEBVIEW_UI_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets")
+set(WEBVIEW_UI_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/react-hello/dist")
 set(WEBVIEW_FILES_DST_DIR "${CMAKE_CURRENT_BINARY_DIR}/assets")
 
 set(JUCE_WEBVIEW_SRC_DIR "${JUCE_MODULES_DIR}/juce_gui_extra/native/javascript")
@@ -42,20 +42,6 @@ file(GLOB_RECURSE WEBVIEW_UI_SRC_FILES
 )
 
 set(COPIED_WEBVIEW_FILES "")
-foreach(src ${JUCE_WEBVIEW_SRC_FILES})
-    file(RELATIVE_PATH rel "${JUCE_WEBVIEW_SRC_DIR}" "${src}")
-    set(dst "${JUCE_WEBVIEW_DST_DIR}/${rel}")
-    get_filename_component(dst_dir "${dst}" DIRECTORY)
-    add_custom_command(
-        OUTPUT "${dst}"
-        COMMAND "${CMAKE_COMMAND}" -E make_directory "${dst_dir}"
-        COMMAND "${CMAKE_COMMAND}" -E copy_if_different "${src}" "${dst}"
-        DEPENDS "${src}"
-        COMMENT "Copy (if changed): ${rel} ${src} -> ${dst}"
-        VERBATIM
-    )
-    list(APPEND COPIED_WEBVIEW_FILES "${dst}")
-endforeach()
 foreach(src ${WEBVIEW_UI_SRC_FILES})
     file(RELATIVE_PATH rel "${WEBVIEW_UI_SOURCE_DIR}" "${src}")
     set(dst "${WEBVIEW_FILES_DST_DIR}/${rel}")
