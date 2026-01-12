@@ -218,6 +218,9 @@ class MainWindow : public juce::DocumentWindow {
     setVisible(true);
     setResizable(true, true);
     setSize(1024, 768);
+  #if JUCE_IOS || JUCE_ANDROID
+    setFullScreen(true);
+  #endif
   }
 
   void closeButtonPressed() override {

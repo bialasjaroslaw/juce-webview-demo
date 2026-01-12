@@ -82,6 +82,10 @@ add_dependencies(WebViewFiles WebViewFilesZip)
 juce_add_gui_app(JuceHelloWorld
     PRODUCT_NAME "ExampleWebView"
     NEEDS_WEBVIEW2 ${NEEDS_WEBVIEW2_VALUE}
+    ANDROID_PERMISSIONS 
+        android.permission.INTERNET
+    ANDROID_SDK_TARGET_LEVEL 34
+    ANDROID_MIN_SDK_VERSION 24
 )
 
 # Pass the prefix of the zipped files (e.g., "assets/") to C++
@@ -117,6 +121,12 @@ if(WIN32)
     endif()
 elseif(APPLE)
     target_compile_definitions(JuceHelloWorld PUBLIC JUCE_WEB_BROWSER=1)
+elseif(ANDROID)
+    target_compile_definitions(JuceHelloWorld PUBLIC
+        JUCE_WEB_BROWSER=1
+        JUCE_ANDROID=1
+        JUCE_USE_WIN_WEBVIEW2=0
+    )
 else()
     target_compile_definitions(JuceHelloWorld PUBLIC
         JUCE_WEB_BROWSER=1
