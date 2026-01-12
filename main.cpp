@@ -243,11 +243,13 @@ class HelloWorldApp : public juce::JUCEApplication {
 
     // Some flags that might improve aggressive background tab throttling
     // behavior of WebView2
+#ifdef _WIN32
     _putenv_s("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS",
               "--disable-backgrounding-occluded-windows "
               "--disable-background-timer-throttling "
               "--disable-features=IsolateOrigins,site-per-process "
               "--disable-features=CalculateNativeWinOcclusion");
+#endif
     mainWindow = std::make_unique<MainWindow>(getApplicationName());
   }
 

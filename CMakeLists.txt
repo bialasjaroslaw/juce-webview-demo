@@ -5,7 +5,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 
 set(VCPKG_ACTIVE FALSE)
-set(NEEDS_WEBVIEW2_VALUE TRUE)
+set(NEEDS_WEBVIEW2_VALUE FALSE)
+if(WIN32)
+    set(NEEDS_WEBVIEW2_VALUE TRUE)
+endif()
 if(NOT VCPKG_ACTIVE)
     if(DEFINED VCPKG_ROOT OR DEFINED VCPKG_TARGET_TRIPLET OR DEFINED VCPKG_HOST_TRIPLET)
         set(VCPKG_ACTIVE TRUE)
@@ -101,18 +104,29 @@ target_link_libraries(JuceHelloWorld
     WebViewFiles
 )
 
-if(VCPKG_ACTIVE)
-    find_package(unofficial-webview2 CONFIG REQUIRED)
-    target_link_libraries(
-        JuceHelloWorld PRIVATE unofficial::webview2::webview2
+if(WIN32)
+    target_compile_definitions(JuceHelloWorld PUBLIC
+        JUCE_WEB_BROWSER=1
+        JUCE_USE_WIN_WEBVIEW2=1
+        JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING=1
     )
+    
+    if(VCPKG_ACTIVE)
+        find_package(unofficial-webview2 CONFIG REQUIRED)
+        target_link_libraries(JuceHelloWorld PRIVATE unofficial::webview2::webview2)
+    endif()
+elseif(APPLE)
+    target_compile_definitions(JuceHelloWorld PUBLIC JUCE_WEB_BROWSER=1)
+else()
+    target_compile_definitions(JuceHelloWorld PUBLIC
+        JUCE_WEB_BROWSER=1
+        JUCE_WEB_BROWSER_LINUX_IPC_METHOD=WEBKIT2GTK_4_1
+    )
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(WEBKIT2GTK REQUIRED IMPORTED_TARGET webkit2gtk-4.1)
+    target_link_libraries(JuceHelloWorld PRIVATE PkgConfig::WEBKIT2GTK)
 endif()
 
 target_compile_definitions(JuceHelloWorld PUBLIC
-    JUCE_WINDOWS=1
-    JUCE_WEB_BROWSER=1
     JUCE_USE_CURL=0
-    JUCE_VST3_CAN_REPLACE_VST2=0
-    JUCE_USE_WIN_WEBVIEW2=1
-    JUCE_USE_WIN_WEBVIEW2_WITH_STATIC_LINKING=1
 )
