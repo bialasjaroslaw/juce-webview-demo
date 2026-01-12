@@ -8,8 +8,18 @@
   "configurePresets": [
     {
       "name": "default",
+      "generator": "Ninja",
+      "binaryDir": "build",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "vcpkg",
       "displayName": "VCPKG CL",
       "description": "Dynamic-pthread triplet using CL.",
+      "binaryDir": "${sourceDir}/build-debug",
       "generator": "Ninja",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
@@ -24,66 +34,16 @@
       "environment": {
         "VCPKG_BINARY_SOURCES": "clear;files,C:\\Users\\JBialas\\cache,readwrite"
       }
-    },
-    {
-      "name": "debug",
-      "inherits": "default",
-      "displayName": "VCPKG CL - Debug",
-      "description": "Dynamic-pthread triplet using (Debug).",
-      "binaryDir": "${sourceDir}/build-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      }
-    },
-    {
-      "name": "release",
-      "inherits": "default",
-      "displayName": "VCPKG CL - Release",
-      "description": "Dynamic-pthread triplet using (Release).",
-      "binaryDir": "${sourceDir}/build-release",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
     }
   ],
   "buildPresets": [
     {
-      "name": "debug",
-      "displayName": "Debug build",
-      "configurePreset": "debug"
+      "name": "default",
+      "configurePreset": "default"
     },
     {
-      "name": "release",
-      "displayName": "Release build",
-      "configurePreset": "release"
-    }
-  ],
-  "workflowPresets": [
-    {
-      "name": "debug",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "debug"
-        },
-        {
-          "type": "build",
-          "name": "debug"
-        }
-      ]
-    },
-    {
-      "name": "release",
-      "steps": [
-        {
-          "type": "configure",
-          "name": "release"
-        },
-        {
-          "type": "build",
-          "name": "release"
-        }
-      ]
+      "name": "vcpkg",
+      "configurePreset": "vcpkg"
     }
   ]
 }

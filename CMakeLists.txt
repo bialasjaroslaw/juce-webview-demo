@@ -4,8 +4,6 @@ project(JuceHelloWorld VERSION 1.0.0 LANGUAGES C CXX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 
-add_subdirectory(libs/juce)
-
 set(VCPKG_ACTIVE FALSE)
 set(NEEDS_WEBVIEW2_VALUE TRUE)
 if(NOT VCPKG_ACTIVE)
@@ -14,13 +12,7 @@ if(NOT VCPKG_ACTIVE)
         set(NEEDS_WEBVIEW2_VALUE FALSE)
     endif()
 endif()
-
-message(STATUS "vcpkg root: ${VCPKG_ROOT}")
-message(STATUS "vcpkg active: ${VCPKG_ACTIVE}")
-message(STATUS "vcpkg target triplet: ${VCPKG_TARGET_TRIPLET}")
-message(STATUS "vcpkg host triplet: ${VCPKG_HOST_TRIPLET}")
-message(STATUS "vcpkg manifest mode: ${VCPKG_MANIFEST_MODE}")
-message(STATUS "NEEDS_WEBVIEW2_VALUE: ${NEEDS_WEBVIEW2_VALUE}")
+add_subdirectory(libs/juce)
 
 set(WEBVIEW_UI_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/react-hello/dist")
 set(WEBVIEW_FILES_DST_DIR "${CMAKE_CURRENT_BINARY_DIR}/assets")
