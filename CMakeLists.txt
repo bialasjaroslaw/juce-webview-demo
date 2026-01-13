@@ -19,7 +19,7 @@ add_subdirectory(libs/juce)
 
 set(WEBVIEW_UI_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/react-hello/dist")
 set(REACT_JUCE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/react-hello/src/js/juce")
-set(WEBVIEW_FILES_DST_DIR "${CMAKE_CURRENT_BINARY_DIR}/assets")
+set(WEBVIEW_FILES_DST_DIR "${CMAKE_CURRENT_BINARY_DIR}/public")
 
 set(JUCE_WEBVIEW_SRC_DIR "${JUCE_MODULES_DIR}/juce_gui_extra/native/javascript")
 set(JUCE_WEBVIEW_DST_DIR "${WEBVIEW_FILES_DST_DIR}/js/juce")
@@ -110,7 +110,7 @@ juce_add_gui_app(JuceHelloWorld
     ANDROID_MIN_SDK_VERSION 24
 )
 
-# Pass the prefix of the zipped files (e.g., "assets/") to C++
+# Pass the prefix of the zipped files (e.g., "public/") to C++
 cmake_path(GET WEBVIEW_FILES_DST_DIR FILENAME ZIPPED_FILES_PREFIX)
 target_compile_definitions(JuceHelloWorld PRIVATE ZIPPED_FILES_PREFIX="${ZIPPED_FILES_PREFIX}/")
 

@@ -12,12 +12,14 @@ If you are not so comfortable with running unknown JS code in your browser, inst
 
 ```
 npm install
-# Copy JUCE JS framework to specific react folder
+# Copy JUCE JS framework to specific react folder (just build target CopyJuceJSFiles)
+cmake --preset default
 cmake --build --preset default --target CopyJuceJSFiles
 cd react-hello
 npm run build
 ```
 
+Back to main directory
 Use vcpkg in manifest mode if you can
 ```
 vcpkg install
