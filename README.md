@@ -6,6 +6,18 @@ Just remember to pull submodule
 git submodule update --init
 ```
 
+## Security considerations
+
+If you are not so comfortable with running unknown JS code in your browser, instead of building app as it is first deploy react app from sources 
+
+```
+npm install
+# Copy JUCE JS framework to specific react folder
+cmake --build --preset default --target CopyJuceJSFiles
+cd react-hello
+npm run build
+```
+
 Use vcpkg in manifest mode if you can
 ```
 vcpkg install
