@@ -11,11 +11,11 @@ git submodule update --init
 If you are not so comfortable with running unknown JS code in your browser, instead of building app as it is first deploy react app from sources 
 
 ```
-npm install
 # Copy JUCE JS framework to specific react folder (just build target CopyJuceJSFiles)
 cmake --preset default
 cmake --build --preset default --target CopyJuceJSFiles
 cd react-hello
+npm install
 npm run build
 ```
 
